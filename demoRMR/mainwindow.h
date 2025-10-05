@@ -17,7 +17,7 @@
 #include<vector>
 //#include "ckobuki.h"
 //#include "rplidar.h"
-
+#include <QKeyEvent>
 
 #include "robot.h"
 #ifndef DISABLE_JOYSTICK
@@ -46,6 +46,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+    void keyPressEvent(QKeyEvent *event) override;    // toto som pridal
+
    private slots:
     void on_pushButton_9_clicked();
 
@@ -73,6 +76,12 @@ private:
 
     robot _robot;
     //--skuste tu nic nevymazat... pridavajte co chcete, ale pri odoberani by sa mohol stat nejaky drobny problem, co bude vyhadzovat chyby
+
+    //--pridal som--//
+    bool notaus = false;
+    int vpravo = 0;
+    //--pridal som--//
+
     Ui::MainWindow *ui;
      void paintEvent(QPaintEvent *event);// Q_DECL_OVERRIDE;
      int updateLaserPicture;
@@ -85,6 +94,7 @@ private:
 #ifndef DISABLE_JOYSTICK
      QJoysticks *instance;
 #endif
+
   public slots:
      void setUiValues(double robotX,double robotY,double robotFi);
 

@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QPainter>
 #include <math.h>
+
 ///TOTO JE DEMO PROGRAM...AK SI HO NASIEL NA PC V LABAKU NEPREPISUJ NIC,ALE SKOPIRUJ SI MA NIEKAM DO INEHO FOLDERA
 /// AK HO MAS Z GITU A ROBIS NA LABAKOVOM PC, TAK SI HO VLOZ DO FOLDERA KTORY JE JASNE ODLISITELNY OD TVOJICH KOLEGOV
 /// NASLEDNE V POLOZKE Projects SKONTROLUJ CI JE VYPNUTY shadow build...
@@ -147,29 +148,37 @@ void MainWindow::on_pushButton_9_clicked() //start button
 #endif
 }
 
+int pohyb = 0;
+
 void MainWindow::on_pushButton_2_clicked() //forward
 {
+    if (notaus == false){
     //pohyb dopredu
-    _robot.setSpeed(500,0);
-
+    pohyb = pohyb + 50;
+    _robot.setSpeed(pohyb ,0);
+    }
 }
 
 void MainWindow::on_pushButton_3_clicked() //back
 {
-    _robot.setSpeed(-250,0);
-
+    if (notaus == false){
+    pohyb = 0;
+    _robot.setSpeed(-50,0);
+    }
 }
 
 void MainWindow::on_pushButton_6_clicked() //left
 {
-    _robot.setSpeed(0,3.14159/2);
-
+    if (notaus == false){
+    _robot.setSpeed(0,3.14159/16);
+    }
 }
 
 void MainWindow::on_pushButton_5_clicked()//right
 {
-    _robot.setSpeed(0,-3.14159/2);
-
+    if (notaus == false){
+    _robot.setSpeed(0,-3.14159/16);
+    }
 }
 
 void MainWindow::on_pushButton_4_clicked() //stop
@@ -178,8 +187,47 @@ void MainWindow::on_pushButton_4_clicked() //stop
 
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if (!event->isAutoRepeat()) {
 
+        // núdzové zastavenie
+        if (event->key() == Qt::Key_X) {
+            notaus = !notaus;
 
+            if (notaus) {
+                _robot.setSpeed(0, 0);
+                qDebug() << "NÚDZOVÉ ZASTAVENIE AKTIVOVANÉ!";
+            } else {
+                qDebug() << "NÚDZOVÉ ZASTAVENIE VYPNUTÉ!";
+            }
+        }
+
+        // obyčajné zastavenie
+        else if (event->key() == Qt::Key_0) {
+            _robot.setSpeed(0, 0);
+            qDebug() << "ZASTAVENIE!";
+        }
+
+        // pohyb šípkami
+        else if (event->key() == Qt::Key_W) {   // dopredu
+            if (!notaus) _robot.setSpeed(50, 0);
+        }
+        else if (event->key() == Qt::Key_S) { // dozadu
+            if (!notaus) _robot.setSpeed(-50, 0);
+        }
+        else if (event->key() == Qt::Key_A) { // doľava
+            if (!notaus) _robot.setSpeed(0, 3.14159/16);
+        }
+        else if (event->key() == Qt::Key_D) { // doprava
+            if (!notaus) _robot.setSpeed(0, -3.14159/16);
+        }
+
+        else {
+            QMainWindow::keyPressEvent(event);
+        }
+    }
+}
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -198,9 +246,6 @@ void MainWindow::on_pushButton_clicked()
     }
 #endif
 }
-
-
-
 
 
 int MainWindow::paintThisLidar(const LaserMeasurement &laserData)
