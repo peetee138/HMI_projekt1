@@ -131,11 +131,18 @@ LIBS += -L../bin -llibrobot
     }
 }  # end DISABLE_OPENCV guard
 SOURCES += main.cpp\
+        lidarwidget.cpp \
         mainwindow.cpp \
+        revsenwidget.cpp \
         robot.cpp
 
 HEADERS  += mainwindow.h \
+    lidarwidget.h \
+    revsenwidget.h \
     robot.h
 
 FORMS    += mainwindow.ui
 message(DEFINES in demoRMR: $$DEFINES)  # Debugging message
+
+RESOURCES += \
+    iconky.qrc
