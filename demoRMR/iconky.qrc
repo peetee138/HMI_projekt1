@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../tvary/10181283.png</file>
+        <file>../tvary/Emergency-Stop-Button-Sign-Meaning.webp</file>
+        <file>../tvary/sipka dole.png</file>
+        <file>../tvary/sipka hore.png</file>
+        <file>../tvary/sipka vlavo.png</file>
+        <file>../tvary/sipka vpravo.png</file>
+        <file>../tvary/NOT AUS.png</file>
+        <file>../tvary/automatic.png</file>
+        <file>../tvary/manualis.png</file>
+        <file>../tvary/power.webp</file>
+        <file>../tvary/camera.png</file>
+        <file>../tvary/laser.png</file>
+        <file>../tvary/turn_on.png</file>
+        <file>../tvary/automatika.png</file>
+        <file>../tvary/1664849-200.png</file>
+        <file>../tvary/9937122.png</file>
+    </qresource>
+</RCC>
