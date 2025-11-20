@@ -223,6 +223,7 @@ int robot::processThisLidar(LaserMeasurement laserData)
                  << " vzdialenost: " << copyOfLaserData.Data[i].scanDistance;
     }*/
     if (manualOverrideActive){
+        emit publishSystemBreakStatus(false);
         return 0;
     }
 
@@ -246,16 +247,16 @@ int robot::processThisLidar(LaserMeasurement laserData)
 
         double pravotocivyUhol_negativny = -povodnyUhol_lavotocivy;
 
-        double uhol_lid = pravotocivyUhol_negativny;
+        double uhol_lidar = pravotocivyUhol_negativny;
 
         double vzdialenost_lid = copyOfLaserData.Data[i].scanDistance;
 
 
         // Ak je uhol záporný (napr. -90°), pridaním 360° ho dostaneme do kladnej časti (270°).
-        if (uhol_lid < 0.0) {
-            uhol_lid += 180.0;
+        if (uhol_lidar < 0.0) {
+            uhol_lidar += 180.0;
         }
-
+        double uhol_lid = uhol_lidar;
         //nove
         if ((uhol_lid <= -146.0 && uhol_lid >= -190.0)||(uhol_lid >= 146.0 && uhol_lid <= 180.0)){
             prekazkyVpredu_uhol.push_back(uhol_lid);
@@ -265,16 +266,19 @@ int robot::processThisLidar(LaserMeasurement laserData)
 
         reverzAsistent(uhol_lid, vzdialenost_lid);
 
-        if ((uhol_lid>45 || uhol_lid <-45) && vzdialenost_lid < 230 && vzdialenost_lid > 100) {
+        if ((uhol_lid>30 || uhol_lid <-30) && vzdialenost_lid < 200 && vzdialenost_lid > 100) {
             lidar_ping ++;
-            new_break_status = true;
+            //new_break_status = true;
 
-        } else if ((uhol_lid >= -30 && uhol_lid <=30)&& vzdialenost_lid < 250 && vzdialenost_lid > 100){
+        } else if ((uhol_lid >= -30 && uhol_lid <=30)&& vzdialenost_lid < 220 && vzdialenost_lid > 100){
             //std::cout << "ZIJEEEEM"<<endl;
             lidar_ping ++;
-            new_break_status = true;
+            //new_break_status = true;
         }
     }
+    if (lidar_ping >= 2)
+        new_break_status = true;
+
     qDebug()<<"Lidar PING" << lidar_ping;
 
     //int pom = copyOfLaserData.numberOfScans/2;

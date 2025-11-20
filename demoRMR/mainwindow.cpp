@@ -721,7 +721,12 @@ int MainWindow::paintThisSkeleton(const skeleton &skeledata)
         double poloha_pravej = uhol(Ax_RW,Ay_RW,Bx_RM,By_RM,Cx_RPom,Cy_RPom);
 
 
-        if(poloha_lavej<25 && poloha_lavej>-25){
+        double Index_Man_L = skeleJoints.joints[left_ringy_tip].x;
+        double Index_Man_R = skeleJoints.joints[right_ringy_tip].x;;
+        //if (Index_Man_L < Index_Man_R)
+        //    manual = true;
+
+        if(poloha_lavej<25 && poloha_lavej>-25 && !manual){
             double Ax_L = skeleJoints.joints[left_thumb_mcp].x;
             double Ay_L = skeleJoints.joints[left_thumb_mcp].y;
 
@@ -773,7 +778,7 @@ int MainWindow::paintThisSkeleton(const skeleton &skeledata)
         }
     /**************************************************************************************/
 
-        if(poloha_pravej<25 && poloha_pravej>-25){
+        if(poloha_pravej<25 && poloha_pravej>-25 && !manual){
             double Ax_R = skeleJoints.joints[right_thumb_cmc].x;
             double Ay_R = skeleJoints.joints[right_thumb_cmc].y;
 
@@ -899,10 +904,12 @@ void MainWindow::setUiValues(double robotX,double robotY,double robotFi)
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event){
-    const double ASPECT_RATIO = 4.0 / 3.0; //pomer stran
+    // *** ZMENA TU: Pôvodne bolo 4.0 / 3.0, teraz je 16.0 / 9.0 ***
+    const double ASPECT_RATIO = 16.0 / 9.0;
 
     int newWidth = event->size().width();
     int newHeight = event->size().height();
+
 
     if((double)newWidth / newHeight > ASPECT_RATIO){
         newWidth = qRound(newHeight * ASPECT_RATIO);
@@ -915,7 +922,6 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     }
 
     QMainWindow::resizeEvent(event);
-
 }
 
 void MainWindow::receiveFrontLidarPoints(const std::vector<double> &uhol, const std::vector<double> &vzdialenost){
