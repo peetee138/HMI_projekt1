@@ -150,9 +150,9 @@ void MainWindow::paintEvent(QPaintEvent *event)
         QBrush brush;   // farba výplne
         painter.setBrush(brush);  // aktivovanie výplne
         double f = 934.962;
-        double Z = 210;
+        double Z = -210;
         double Z_D = -145;
-        double Y_D = 115;
+        double Y_D = -115;
         double X_obr;
         double Y_obr;
         double uhol_POM;

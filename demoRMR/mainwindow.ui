@@ -317,7 +317,7 @@
       <property name="spacing">
        <number>4</number>
       </property>
-      <item>
+      <item alignment="Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter">
        <widget class="QPushButton" name="pushButton_15">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -328,7 +328,7 @@
         <property name="minimumSize">
          <size>
           <width>162</width>
-          <height>144</height>
+          <height>162</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -336,6 +336,9 @@
           <width>144</width>
           <height>144</height>
          </size>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
         </property>
         <property name="text">
          <string/>
